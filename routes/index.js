@@ -1,9 +1,11 @@
 var express = require("express");
 var fetch = require("node-fetch");
 const axios = require("axios");
+// @ts-ignore
 const { response } = require("express");
 const secp256k1 = require("secp256k1");
 const crypto = require("crypto");
+// @ts-ignore
 const createError = require("http-errors");
 var router = express.Router();
 const moment = require("moment");
@@ -11,10 +13,12 @@ const moment = require("moment");
 const { server } = require("../config/config.json");
 const { baseURL } = server;
 /* GET home page. */
+// @ts-ignore
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
+// @ts-ignore
 router.get("/register", (req, res) => {
   res.render("register", { layout: "layout", title: "Register" });
 });
@@ -48,6 +52,7 @@ router.post("/register", async (req, res) => {
 
   const url = `${baseURL}/action`;
   await axios
+    // @ts-ignore
     .post(url, _data)
     .then((result) => {
       console.log("result: ", result.data);
@@ -59,14 +64,17 @@ router.post("/register", async (req, res) => {
     });
 });
 
+// @ts-ignore
 router.get("/check-register", (req, res) => {
   res.render("check-register", { layout: "layout", title: "Check Register" });
 });
 
 router.post("/check-register", async (req, res) => {
   const data = { ...req.body };
+  // @ts-ignore
   const { idnumber, fullname, birthday, birthmonth, birthyear } = data;
 
+  // @ts-ignore
   const { privKey, pubKey, _privKey, _pubKey, hash } = generateKeyPair(data);
   const checkRegisteration = await didUserExist(_pubKey);
   console.log("checkRegisteration", checkRegisteration);
@@ -77,7 +85,9 @@ router.post("/check-register", async (req, res) => {
   res.status(200).json(checkRegisteration);
 });
 
+// @ts-ignore
 router.get("/votelist", function (req, res, next) {
+  // @ts-ignore
   fetch(`${baseURL}/elections`, {
     headers: {
       "Content-Type": "application/json",
@@ -105,6 +115,7 @@ router.get("/votelist", function (req, res, next) {
 
 router.get("/votelist/:id", function (req, res) {
   let id = req.params.id;
+  // @ts-ignore
   fetch(`${baseURL}/elections/${id}`, {
     headers: {
       "Content-Type": "application/json",
@@ -147,6 +158,7 @@ router.post("/votelist/", async (req, res) => {
 
   const url = `${baseURL}/action`;
   await axios
+    // @ts-ignore
     .post(url, _data)
     .then((result) => {
       console.log("result: ", result.data);
@@ -160,6 +172,7 @@ router.post("/votelist/", async (req, res) => {
 
 router.get("/count/:id", function (req, res) {
   let id = req.params.id;
+  // @ts-ignore
   fetch(`${baseURL}/count/${id}`, {
     headers: {
       "Content-Type": "application/json",
@@ -196,6 +209,7 @@ router.post("/history", function (req, res) {
   res.redirect(`/history/${id}`);
 });
 
+// @ts-ignore
 router.get("/find_history", function (req, res) {
   res.render("address", {
     title: "Find History",
@@ -205,6 +219,7 @@ router.get("/find_history", function (req, res) {
 
 router.get("/history/:id", function (req, res) {
   let id = req.params.id;
+  // @ts-ignore
   fetch(`${baseURL}/history/${id}`, {
     headers: {
       "Content-Type": "application/json",
@@ -240,6 +255,7 @@ router.get("/history/:id", function (req, res) {
     });
 });
 
+// @ts-ignore
 router.get("/address", function (req, res) {
   res.render("findLock", {
     title: "Find Lock",
@@ -253,6 +269,7 @@ router.post("/address", function (req, res) {
   const pubKey = secp256k1.publicKeyCreate(
     new Uint8Array(ParseHexString(priKey))
   );
+  // @ts-ignore
   fetch(`${baseURL}/address/${ArrayToStringHex([...pubKey])}`, {
     headers: {
       "Content-Type": "application/json",
@@ -270,6 +287,7 @@ router.post("/address", function (req, res) {
     });
 });
 
+// @ts-ignore
 router.get("/about-us", function (req, res) {
   res.render("about-us", {
     title: "About Us",
@@ -314,6 +332,7 @@ const generateKeyPair = (data) => {
 
 async function didUserExist(_pubKey) {
   return await axios
+    // @ts-ignore
     .get(`${baseURL}/address/${_pubKey}`)
     .then((result) => result.data);
 }
