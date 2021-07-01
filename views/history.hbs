@@ -1,0 +1,32 @@
+<div class="container-fluid rounded-sm border border-light shadow bg-white">
+    <div class="px-5 py-5">
+        <h2 class="mb-5">Danh sách lịch Sử bình chọn:</h2>
+        <div class="container">
+            <div class="col justify-content-md-center">
+                {{#if history}}
+                {{#each history}}
+                <div class="card">
+                    <div class="card-header">
+                        {{this.data.name}}
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Năm: {{this.data.year}}</h6>
+                        <h5 class="card-title">Ứng cử viên chọn:</h5>
+                        <p class="card-text">{{this.data.nominee}}</p>
+                        <p class="card-text">Time: {{this.time}}</p>
+                    </div>
+                </div>
+                {{/each}}
+                {{else}}
+                Not Found
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+    })
+</script>

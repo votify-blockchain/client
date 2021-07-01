@@ -1,0 +1,131 @@
+<div class="container-fluid rounded-sm border border-light shadow bg-white">
+    <div class="px-5 py-5">
+        <h2 class="mb-5 text-center" id="nameOfElection">{{elections.name}}</h2>
+        <div class="container">
+            <div class="col justify-content-md-center">
+                <form>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="lastName">Họ</label>
+                                    <input type="text" class="form-control" id="lastName">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="firstName">Tên</label>
+                                    <input type="text" class="form-control" id="firstName">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="idnumber">Chứng minh nhân dân</label>
+                                <input type="text" class="form-control" id="idnumber">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="year">Năm bầu cử</label>
+                                <input type="text" class="form-control" id="year" readonly value="{{elections.year}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="privKey">Khóa bí mật</label>
+                                <input type="password" class="form-control" id="privKey" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="idlock">ID</label>
+                                <input type="password" class="form-control" id="idlock" required>
+                            </div>
+
+                            <label for="nominees">Bầu ứng cử viên:</label>
+                            <select id="nominees" class="custom-select custom-select-sm">
+                                {{#each elections.nominees}}
+                                <option value={{this}}>{{this}}</option>
+                                {{/each}}
+                            </select>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary mt-5">Xác nhận bầu cử</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal_place"></div>
+</div>
+
+<script>
+    $(function () {
+        const modal = (title, content, onClose, result) =>
+            `<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">${title}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${content}</p>
+                        ${result}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="${onClose}">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>`
+
+
+        $('button[type=submit]').click(function (e) {
+            e.preventDefault();
+            const _data = {
+                year: $("#year").val(),
+                name: $("#nameOfElection").text(),
+                nominees: $("#nominees option:selected").text(),
+                privKey: $("#privKey").val(),
+                lock: $("#idlock").val(),
+            }
+            alert(JSON.stringify(_data, null, 4));
+
+            // POST form
+            $.ajax({
+                url: '/votelist/',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                async: false,
+                timeout: 0,
+                data: JSON.stringify(_data),
+                success: function (data) {
+                    if (data.status === "valid") {
+                        const title = `Thông tin bầu cử`;
+                        const content = `Cử tri đã bầu cho ${_data.nominees} <hr>`;
+                        $("#modal_place").html(modal(title, content, "window.location.replace('/')", `<div><b>ID:</b> <code>${data.id}</code></div>`));
+                        $("#modal").modal({ backdrop: "static", keyboard: false });
+                        $("#modal").modal("show");
+                        console.log(JSON.stringify(data, null, 4));
+                    } else {
+                        const title = `Lỗi`;
+                        const content = `Khóa bí mật hoặc ID sai`;
+                        $("#modal_place").html(modal(title, content, "window.location.reload()"));
+                        $("#modal").modal('show');
+                        console.log(JSON.stringify(data, null, 4));
+                    }
+                },
+                error: function (err) {
+                    const title = `Lỗi`;
+                    const content = `Khóa bí mật hoặc ID sai`;
+                    $("#modal_place").html(modal(title, content, "window.location.reload()"));
+                    $("#modal").modal('show');
+                    console.log(JSON.stringify(err, null, 4));
+                }
+            });
+        })
+    })    
+</script>

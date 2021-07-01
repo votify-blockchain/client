@@ -1,0 +1,5 @@
+{
+  "server": {
+    "baseURL": "https://blockchain-node-01.herokuapp.com"
+  }
+}

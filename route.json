@@ -1,0 +1,124 @@
+{
+  "/action": {
+    "method": "POST",
+    "inputs": [
+      {
+        "type": "users",
+        "data": {
+          "id": "string",
+          "name": "string",
+          "dob": "Date",
+          "pubKey": "number[]"
+        },
+        "signature": "null",
+        "lock": "null"
+      },
+      {
+        "type": "vote",
+        "data": {
+          "year": "number",
+          "name": "string",
+          "nominee": "string"
+        },
+        "signature": "number[]",
+        "lock": "string"
+      }
+    ],
+    "outputs": [
+      {
+        "status": "valid",
+        "id": "string"
+      },
+      {
+        "status": "invalid",
+        "id": "null"
+      }
+    ]
+  },
+  "/action/:id": {
+    "method": "GET",
+    "outputs": [
+      {
+        "data": "null"
+      },
+      {
+        "data": "data user hay data vote"
+      }
+    ]
+  },
+  "/check/:address": {
+    "method": "GET",
+    "outputs": [{ "result": "true" }, { "result": "false" }],
+    "Lưu Ý": "address la action id"
+  },
+  "/address/:pubKey": {
+    "method": "GET",
+    "outputs": [{ "result": "string" }, { "result": "false" }]
+  },
+  "/count": {
+    "method": "POST",
+    "input": {
+      "year": "number",
+      "name": "string"
+    },
+    "outputs": [
+      {
+        "result": "false"
+      },
+      {
+        "result": {
+          "nominee1-name": {
+            "name": "string",
+            "count": "number"
+          },
+          "nominee2-name": {
+            "name": "string",
+            "count": "number"
+          },
+          "UnCount": {
+            "name": "string",
+            "count": "number"
+          }
+        }
+      }
+    ]
+  },
+  "/history/:lock": {
+    "method": "GET",
+    "output": [
+      {
+        "data": "data user hay data vote",
+        "time": "number time that action send to blockchain"
+      }
+    ]
+  },
+  "/elections": {
+    "method": "GET",
+    "output": [
+      {
+        "id": "string",
+        "year": "number",
+        "name": "string",
+        "nominees": "string[]",
+        "deadline": "number"
+      }
+    ]
+  },
+  "/elections/:id": {
+    "method": "GET",
+    "outputs": [
+      {
+        "result": "false"
+      },
+      {
+        "result": {
+          "id": "string",
+          "year": "number",
+          "name": "string",
+          "nominees": "string[]",
+          "deadline": "number"
+        }
+      }
+    ]
+  }
+}

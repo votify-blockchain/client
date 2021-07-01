@@ -1,0 +1,56 @@
+<div class="container-fluid rounded-sm border border-light shadow bg-white">
+    <div class="px-5 py-5">
+        <form id="formInput">
+            <div class="form-group row">
+                <label for="inputPrivateKey" class="col-sm-2 col-form-label">Mã bí mật:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPrivateKey">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mb-4" id="findLock">Tìm ID</button>
+            <div class="form-group row">
+                <label for="inputLock" class="col-sm-2 col-form-label">ID:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputLock" readonly>
+                </div>
+                <button type="button" class="btn btn-light" id="copyBtn">Copy</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#copyBtn").click((event) => {
+            let text = $("#inputLock");
+            text.select();
+            document.execCommand("copy");
+            $(event.target).text("Copied");
+        });
+
+        $("#findLock").click((event) => {
+            let text = $("#inputPrivateKey").val();
+            $.ajax({
+                url: '/address',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                async: false,
+                timeout: 0,
+                data: JSON.stringify({ priKey: text }),
+                success: function (data) {
+                    console.log(data)
+                    if (!data.address) {
+                        $("#inputLock").val("Not Found");
+                    } else {
+                        $("#inputLock").val(data.address);
+                        $("#formInput").append(`<a href="/history/${data.address}" class="btn btn-success">Lịch sử bình chọn</a>`)
+                    }
+                },
+                error: function (err) {
+                    console.log(JSON.stringify(err, null, 4));
+                }
+            });
+        })
+    })    
+</script>

@@ -1,0 +1,32 @@
+<div class="container-fluid rounded-sm border border-light shadow bg-white">
+    <div class="px-5 py-5">
+        <h2 class="mb-5">Danh sách các cuộc bầu cử</h2>
+        <div class="container">
+            <div class="col justify-content-md-center">
+                {{#each elections}}
+                <div class="card">
+                    <div class="card-header">
+                        {{this.name}}
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Năm: {{this.year}}</h6>
+                        <h5 class="card-title">Các ứng cử viên:</h5>
+                        {{#each this.nominees}}
+                        <p class="card-text">- {{this}}</p>
+                        {{/each}}
+                        <p class="card-text">Deadline: {{this.deadline}}</p>
+                        <a href="/votelist/{{this.id}}" class="btn btn-primary">Thực hiện bầu cử</a>
+                        <a href="/count/{{this.id}}" class="btn btn-success">Kết quả bầu cử</a>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+    })
+</script>

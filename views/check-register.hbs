@@ -1,0 +1,150 @@
+<div class="container-fluid rounded-sm border border-light shadow bg-white">
+    <div class="px-5 py-5">
+        <h2 class="mb-5">Kiểm tra đăng ký</h2>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="lastName">Họ<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" id="lastName" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="firstName">Tên<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" id="firstName" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="idnumber">Chứng minh nhân dân<span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="idnumber" required>
+            </div>
+
+            <div class="form-group">
+                <label for="inputAddress">Địa chỉ<span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="1023 Huỳnh Tấn Phát" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Thành phố<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" id="inputCity" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputState">Tỉnh<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" id="inputState" required>
+
+                </div>
+            </div>
+
+            <label class="form-row ml-1">Ngày tháng năm sinh<span style="color: red;">*</span></label>
+            <div class="form-row ">
+
+
+                <div class="form-group col-md-6">
+                    <select class="form-control" id="birthmonth" aria-placeholder="Tháng">
+                    </select>
+
+                </div>
+                <div class="form-group col-md-4">
+                    <select class="form-control" id="birthday" aria-placeholder="Ngày">
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <select class="form-control" id="birthyear" placeholder="Năm">
+                    </select>
+                </div>
+
+
+
+            </div>
+            <button type="submit" class="btn btn-primary mt-5">Kiểm tra đăng ký</button>
+        </form>
+        <div id="modal_place"></div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // check form validation
+        var options, birthmonth, birthday, birthyear;
+        for (i = 1, options = `<option  value=0>Tháng</option>`; i < 13; i++) {
+            options += `<option value=${i}>${i}</option>`;
+        }
+        $('#birthmonth').html(options);
+
+
+        for (i = 1, options = `<option value=0>Ngày</option>`; i < 32; i++) {
+            options += `<option value=${i}>${i}</option>`;
+        }
+        $('#birthday').html(options);
+
+        for (i = 1920, options = `<option value=0>Năm</option>`; i < 2120; i++) {
+            options += `<option value=${i}>${i}</option>`;
+        }
+        $('#birthyear').html(options);
+
+        const modal = (title, content, continue_button) =>
+            `<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">${title}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${content}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        ${continue_button}
+                    </div>
+                </div>
+            </div>
+        </div>`
+
+        $('button[type=submit]').click(function (e) {
+            e.preventDefault();
+
+            birthday = $('#birthday option:selected').text();
+            birthmonth = $('#birthmonth option:selected').text();
+            birthyear = $('#birthyear option:selected').text();
+            const data = {
+                idnumber: $("#idnumber").val(),
+                fullname: `${$("#lastName").val()}  ${$("#firstName").val()}`,
+                birthday,
+                birthmonth,
+                birthyear
+            }
+
+            // POST form
+            $.ajax({
+                url: '/check-register',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                timeout: 0,
+                dataType: 'json',
+                async: false,
+                data: JSON.stringify(data),
+                success: function (data) {
+                    console.log(JSON.stringify(data, null, 4));
+
+                    const title = `Cử tri hợp lệ`;
+                    const content = `ID của bạn<br><b>ID:</b> <code>${data.address}</code></li>`;
+                    const continue_button = `
+                    <a href="./votelist" class="btn btn-primary active" role="button" aria-pressed="true">Tiếp tục bầu <img src="/images/arrow-right.svg" width="30" height="30" class="d-inline-block align-top"></a>`
+                    $("#modal_place").html(modal(title, content, continue_button));
+                    $("#modal").modal('show');
+                },
+                error: function (err) {
+                    console.log(JSON.stringify(err, null, 4));
+                    const continue_button = `
+                    <a href="./register" class="btn btn-primary active" role="button" aria-pressed="true">Đăng ký</a>`;
+                    $("#modal_place").html(modal('Cử tri không tồn tại', 'Cử tri với thông tin trên chưa đăng ký', continue_button));
+                    $("#modal").modal('show');
+                }
+            })
+        })
+
+    })
+</script>
