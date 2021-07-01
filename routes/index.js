@@ -270,6 +270,13 @@ router.post("/address", function (req, res) {
     });
 });
 
+router.get("/about-us", function (req, res) {
+  res.render("about-us", {
+    title: "About Us",
+    layout: "layout",
+  });
+});
+
 module.exports = router;
 
 //////////////////////////////////////////
