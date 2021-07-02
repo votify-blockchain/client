@@ -52,7 +52,7 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mt-5">Đăng ký</button>
+            <button type="submit" class="btn btn-outline-primary mt-5">Đăng ký</button>
         </form>
 
         <div id="modal_place"></div>
@@ -92,7 +92,7 @@
                         <p>${content}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
                         ${continue_button}
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                     </ul>
                     `;
                     const continue_button = `
-                    <a href="./votelist" class="btn btn-primary active" role="button" aria-pressed="true">Tiếp tục bầu <img src="/images/arrow-right.svg" width="30" height="30" class="d-inline-block align-top"></a>`
+                    <a href="./votelist" class="btn btn-outline-primary active" role="button" aria-pressed="true">Tiếp tục bầu <img src="/images/arrow-right.svg" width="30" height="30" class="d-inline-block align-top"></a>`
                     $("#modal_place").html(modal(title, content, continue_button));
                     $("#modal").modal('show');
                     console.log(JSON.stringify(data, null, 4));
@@ -139,7 +139,7 @@
                     const content = `Cử tri đã đăng ký với
                     <b>ID:<b> <code>${address}</code>`;
                     const continue_button = `
-                    <a href="./votelist" class="btn btn-primary active" role="button" aria-pressed="true">Tiếp tục bầu <img src="/images/arrow-right.svg" width="30" height="30" class="d-inline-block align-top"></a>`
+                    <a href="./votelist" class="btn btn-outline-primary active" role="button" aria-pressed="true">Tiếp tục bầu <img src="/images/arrow-right.svg" width="30" height="30" class="d-inline-block align-top"></a>`
                     
                     $("#modal_place").html(modal('Thông báo', content, continue_button));
                     $("#modal").modal('show');

@@ -7,13 +7,13 @@
                     <input type="password" class="form-control" id="inputPrivateKey">
                 </div>
             </div>
-            <button type="button" class="btn btn-primary mb-4" id="findLock">Tìm ID</button>
+            <button type="button" class="btn btn-outline-primary mb-4" id="findLock">Tìm ID</button>
             <div class="form-group row">
                 <label for="inputLock" class="col-sm-2 col-form-label">ID:</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" id="inputLock" readonly>
                 </div>
-                <button type="button" class="btn btn-light" id="copyBtn">Copy</button>
+                <button type="button" class="btn btn-outline-light" id="copyBtn">Copy</button>
             </div>
         </form>
     </div>
@@ -44,7 +44,7 @@
                         $("#inputLock").val("Not Found");
                     } else {
                         $("#inputLock").val(data.address);
-                        $("#formInput").append(`<a href="/history/${data.address}" class="btn btn-success">Lịch sử bình chọn</a>`)
+                        $("#formInput").append(`<a href="/history/${data.address}" class="btn btn-outline-success">Lịch sử bình chọn</a>`)
                     }
                 },
                 error: function (err) {

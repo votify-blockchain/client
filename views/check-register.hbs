@@ -55,7 +55,7 @@
 
 
             </div>
-            <button type="submit" class="btn btn-primary mt-5">Kiểm tra đăng ký</button>
+            <button type="submit" class="btn btn-outline-primary mt-5">Kiểm tra đăng ký</button>
         </form>
         <div id="modal_place"></div>
 
@@ -96,7 +96,7 @@
                         <p>${content}</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
                         ${continue_button}
                     </div>
                 </div>
@@ -132,14 +132,14 @@
                     const title = `Cử tri hợp lệ`;
                     const content = `ID của bạn<br><b>ID:</b> <code>${data.address}</code></li>`;
                     const continue_button = `
-                    <a href="./votelist" class="btn btn-primary active" role="button" aria-pressed="true">Tiếp tục bầu <img src="/images/arrow-right.svg" width="30" height="30" class="d-inline-block align-top"></a>`
+                    <a href="./votelist" class="btn btn-outline-primary active" role="button" aria-pressed="true">Tiếp tục bầu <img src="/images/arrow-right.svg" width="30" height="30" class="d-inline-block align-top"></a>`
                     $("#modal_place").html(modal(title, content, continue_button));
                     $("#modal").modal('show');
                 },
                 error: function (err) {
                     console.log(JSON.stringify(err, null, 4));
                     const continue_button = `
-                    <a href="./register" class="btn btn-primary active" role="button" aria-pressed="true">Đăng ký</a>`;
+                    <a href="./register" class="btn btn-outline-primary active" role="button" aria-pressed="true">Đăng ký</a>`;
                     $("#modal_place").html(modal('Cử tri không tồn tại', 'Cử tri với thông tin trên chưa đăng ký', continue_button));
                     $("#modal").modal('show');
                 }
