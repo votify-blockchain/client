@@ -1,5 +1,5 @@
 {
   "server": {
-    "baseURL": "https://server-votify.herokuapp.com"
+    "baseURL": "https://e1c9c762cf61.ngrok.io"
   }
 }
