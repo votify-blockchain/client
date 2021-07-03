@@ -15,12 +15,12 @@ const { baseURL } = server;
 /* GET home page. */
 // @ts-ignore
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  res.render("index", { title: "Home" });
 });
 
 // @ts-ignore
 router.get("/register", (req, res) => {
-  res.render("register", { layout: "layout", title: "Register" });
+  res.render("register", { layout: "layout", title: "Đăng ký" });
 });
 
 router.post("/register", async (req, res) => {
@@ -66,7 +66,7 @@ router.post("/register", async (req, res) => {
 
 // @ts-ignore
 router.get("/check-register", (req, res) => {
-  res.render("check-register", { layout: "layout", title: "Check Register" });
+  res.render("check-register", { layout: "layout", title: "Kiểm tra người dùng" });
 });
 
 router.post("/check-register", async (req, res) => {
@@ -102,7 +102,7 @@ router.get("/votelist", function (req, res, next) {
         );
       }
       res.render("votelist", {
-        title: "Election List",
+        title: "Danh sách bầu cử",
         layout: "layout",
         elections: data,
       });
@@ -126,7 +126,7 @@ router.get("/votelist/:id", function (req, res) {
     .then((data) => {
       console.log("data", data);
       res.render("vote", {
-        title: "Election",
+        title: "Bầu cử",
         layout: "layout",
         elections: data.result,
       });
@@ -186,14 +186,14 @@ router.get("/count/:id", function (req, res) {
         res.render("voteresult", {
           layout: "layout",
           data: data.result,
-          title: "Vote result",
+          title: "Kết quả",
         });
         console.log(data);
       } else {
         res.render("voteresult", {
           layout: "layout",
           data: data.result,
-          title: "Vote result",
+          title: "Kết quả",
         });
         console.log(data);
       }
@@ -212,7 +212,7 @@ router.post("/history", function (req, res) {
 // @ts-ignore
 router.get("/find_history", function (req, res) {
   res.render("address", {
-    title: "Find History",
+    title: "Lịch sử",
     layout: "layout",
   });
 });
@@ -232,7 +232,7 @@ router.get("/history/:id", function (req, res) {
         res.render("history", {
           layout: "layout",
           history: data,
-          title: "History List",
+          title: "Danh sách history",
         });
       } else {
         // for (let index = 0; index < data.length; index++) {
@@ -244,7 +244,7 @@ router.get("/history/:id", function (req, res) {
         res.render("history", {
           layout: "layout",
           history: data,
-          title: "History List",
+          title: "Danh sách history",
         });
         console.log(data);
       }
@@ -258,7 +258,7 @@ router.get("/history/:id", function (req, res) {
 // @ts-ignore
 router.get("/address", function (req, res) {
   res.render("findLock", {
-    title: "Find Lock",
+    title: "Tìm kiếm",
     layout: "layout",
   });
 });
@@ -290,7 +290,7 @@ router.post("/address", function (req, res) {
 // @ts-ignore
 router.get("/about-us", function (req, res) {
   res.render("about-us", {
-    title: "About Us",
+    title: "Thông tin chúng tôi",
     layout: "layout",
   });
 });
