@@ -234,13 +234,13 @@ router.get("/history/:id", function (req, res) {
           history: data,
           title: "History List",
         });
-        console.log(data);
       } else {
-        for (let index = 0; index < data.length; index++) {
-          data[index].time = moment(data[index].time)
-            .local()
-            .format("HH:mm:ss MMM Do, YYYY");
-        }
+        // for (let index = 0; index < data.length; index++) {
+        //   data[index].time = moment(data[index].time)
+        //     .local()
+        //     .format("HH:mm:ss MMM Do, YYYY");
+        // }
+        data = data.map(x=> {return {...x, time: new Date(x.time).toLocaleString()}})
         res.render("history", {
           layout: "layout",
           history: data,
